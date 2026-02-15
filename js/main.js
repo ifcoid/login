@@ -1,7 +1,6 @@
 import {
     loginWithEmail,
-    loginWithGoogle,
-    handleGoogleCallback,
+    handleGoogleSignIn,
     isAuthenticated,
     redirectAfterLogin
 } from './auth.js';
@@ -18,6 +17,31 @@ import {
 } from './ui.js';
 
 /**
+ * Global callback for Google Sign-In
+ * This is called by Google Sign-In SDK when user signs in
+ */
+window.handleCredentialResponse = async function (response) {
+    showLoading();
+
+    try {
+        // Send credential to backend for verification
+        await handleGoogleSignIn(response.credential);
+
+        // Show success message
+        showSuccess('Login dengan Google berhasil! Redirecting...');
+
+        // Redirect after short delay
+        setTimeout(() => {
+            redirectAfterLogin();
+        }, 1000);
+
+    } catch (error) {
+        hideLoading();
+        showError(error.message || 'Google sign-in failed');
+    }
+};
+
+/**
  * Initialize the application
  */
 function init() {
@@ -28,19 +52,6 @@ function init() {
     if (isAuthenticated()) {
         redirectAfterLogin();
         return;
-    }
-
-    // Check for Google OAuth callback
-    try {
-        if (handleGoogleCallback()) {
-            showSuccess('Login successful! Redirecting...');
-            setTimeout(() => {
-                redirectAfterLogin();
-            }, 1000);
-            return;
-        }
-    } catch (error) {
-        showError(error.message || 'Google login failed');
     }
 
     // Setup event listeners
@@ -56,16 +67,10 @@ function init() {
  */
 function setupEventListeners() {
     const loginForm = document.getElementById('loginForm');
-    const googleButton = document.getElementById('googleButton');
 
     // Email/Password login form submission
     if (loginForm) {
         loginForm.addEventListener('submit', handleLoginSubmit);
-    }
-
-    // Google OAuth button
-    if (googleButton) {
-        googleButton.addEventListener('click', handleGoogleLogin);
     }
 
     // Enter key on password field
@@ -115,14 +120,6 @@ async function handleLoginSubmit(e) {
         hideLoading();
         showError(error.message || 'Login failed. Please check your credentials.');
     }
-}
-
-/**
- * Handle Google login button click
- */
-function handleGoogleLogin() {
-    showLoading();
-    loginWithGoogle();
 }
 
 // Initialize when DOM is ready

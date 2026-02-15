@@ -5,8 +5,7 @@ export const API_CONFIG = {
   endpoints: {
     login: '/auth/login',
     register: '/auth/register',
-    googleLogin: '/auth/google/login',
-    googleCallback: '/auth/google/callback'
+    googleVerify: '/auth/google/verify' // Google Sign-In SDK verification
   }
 };
 

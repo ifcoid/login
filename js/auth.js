@@ -36,34 +36,38 @@ export async function loginWithEmail(email, password) {
 }
 
 /**
- * Initiate Google OAuth login flow
+ * Handle Google Sign-In credential response
+ * This sends the Google credential token to backend for verification
+ * @param {string} credential - JWT credential token from Google
+ * @returns {Promise<Object>} - Response data with token and user info
  */
-export function loginWithGoogle() {
-    // Redirect to backend Google OAuth endpoint
-    window.location.href = `${API_CONFIG.baseURL}${API_CONFIG.endpoints.googleLogin}`;
-}
+export async function handleGoogleSignIn(credential) {
+    try {
+        const response = await fetch(`${API_CONFIG.baseURL}${API_CONFIG.endpoints.googleVerify}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ token: credential }),
+        });
 
-/**
- * Handle Google OAuth callback
- * This function checks URL parameters for token after OAuth redirect
- */
-export function handleGoogleCallback() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get('token');
-    const error = urlParams.get('error');
+        const data = await response.json();
 
-    if (error) {
-        throw new Error(decodeURIComponent(error));
+        if (!response.ok) {
+            throw new Error(data.message || 'Google sign-in failed');
+        }
+
+        if (data.success && data.data) {
+            saveToken(data.data.token);
+            saveUser(data.data.user);
+            return data.data;
+        }
+
+        throw new Error('Invalid response format');
+    } catch (error) {
+        console.error('Google sign-in error:', error);
+        throw error;
     }
-
-    if (token) {
-        saveToken(token);
-        // Clean up URL
-        window.history.replaceState({}, document.title, window.location.pathname);
-        return true;
-    }
-
-    return false;
 }
 
 /**
