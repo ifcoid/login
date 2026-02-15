@@ -1,6 +1,7 @@
 // API Configuration
 export const API_CONFIG = {
-  baseURL: import.meta.env?.VITE_API_URL || 'http://localhost:8080',
+  // Backend API URL (Fly.io deployment)
+  baseURL: import.meta.env?.VITE_API_URL || 'https://lea.fly.dev',
   endpoints: {
     login: '/auth/login',
     register: '/auth/register',
@@ -11,7 +12,7 @@ export const API_CONFIG = {
 
 // Google OAuth Configuration
 export const GOOGLE_CONFIG = {
-  clientId: '1234567890-abcdefghijklmnopqrstuvwxyz123456.apps.googleusercontent.com' // Replace with actual Client ID
+  clientId: '239713755402-4hr2cva377m43rsqs2dk0c7f7cktfeph.apps.googleusercontent.com'
 };
 
 // Token Configuration
@@ -22,6 +23,6 @@ export const TOKEN_CONFIG = {
 
 // Redirect Configuration
 export const REDIRECT_CONFIG = {
-  afterLogin: '/dashboard', // Change to your dashboard URL
+  afterLogin: '/dashboard',
   afterLogout: '/login'
 };
