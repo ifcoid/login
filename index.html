@@ -13,9 +13,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Google Sign-In SDK -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-
     <!-- Stylesheet -->
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -98,7 +95,6 @@
                 <span class="divider-text">atau</span>
             </div>
 
-
             <!-- Google Sign-In Button (SDK) -->
             <div id="g_id_onload"
                 data-client_id="239713755402-4hr2cva377m43rsqs2dk0c7f7cktfeph.apps.googleusercontent.com"
@@ -119,6 +115,20 @@
             <p>&copy; 2026 IF.co.id. All rights reserved.</p>
         </footer>
     </div>
+
+    <!-- Google Sign-In SDK -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <!-- Global callback MUST be defined before main.js module loads -->
+    <script>
+        // Global callback for Google Sign-In SDK
+        window.handleCredentialResponse = async function (response) {
+            // Dispatch custom event that main.js will listen to
+            window.dispatchEvent(new CustomEvent('googleSignIn', {
+                detail: { credential: response.credential }
+            }));
+        };
+    </script>
 
     <!-- Main JavaScript Module -->
     <script type="module" src="js/main.js"></script>

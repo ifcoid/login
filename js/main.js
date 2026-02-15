@@ -17,15 +17,18 @@ import {
 } from './ui.js';
 
 /**
- * Global callback for Google Sign-In
- * This is called by Google Sign-In SDK when user signs in
+ * Handle Google Sign-In event
+ * This listens to the custom event dispatched by the global callback
  */
-window.handleCredentialResponse = async function (response) {
+async function handleGoogleSignInEvent(event) {
     showLoading();
 
     try {
+        // Get credential from event detail
+        const credential = event.detail.credential;
+
         // Send credential to backend for verification
-        await handleGoogleSignIn(response.credential);
+        await handleGoogleSignIn(credential);
 
         // Show success message
         showSuccess('Login dengan Google berhasil! Redirecting...');
@@ -39,7 +42,7 @@ window.handleCredentialResponse = async function (response) {
         hideLoading();
         showError(error.message || 'Google sign-in failed');
     }
-};
+}
 
 /**
  * Initialize the application
@@ -53,6 +56,9 @@ function init() {
         redirectAfterLogin();
         return;
     }
+
+    // Listen for Google Sign-In event
+    window.addEventListener('googleSignIn', handleGoogleSignInEvent);
 
     // Setup event listeners
     setupEventListeners();
@@ -105,7 +111,7 @@ async function handleLoginSubmit(e) {
 
     try {
         // Attempt login
-        const data = await loginWithEmail(email, password);
+        await loginWithEmail(email, password);
 
         // Show success message
         showSuccess('Login successful! Redirecting...');
