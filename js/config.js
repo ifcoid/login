@@ -17,7 +17,8 @@ export const GOOGLE_CONFIG = {
 // Token Configuration
 export const TOKEN_CONFIG = {
   storageKey: 'auth_token',
-  userStorageKey: 'user_data'
+  userStorageKey: 'user_data',
+  tokenType: 'Bearer',
 };
 
 // Redirect Configuration
