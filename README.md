@@ -36,7 +36,7 @@ Edit `js/config.js` dan update `baseURL`:
 
 ```javascript
 export const API_CONFIG = {
-  baseURL: 'https://your-backend-api.com', // Update this
+  baseURL: 'https://leafly', // Update this
   // ...
 };
 ```
