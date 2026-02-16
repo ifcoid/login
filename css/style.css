@@ -524,6 +524,72 @@ body.loaded {
 }
 
 /* ===================================
+   ORCID Button
+   =================================== */
+.btn-orcid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  width: 100%;
+  max-width: 396px;
+  padding: var(--spacing-md);
+  background-color: #A6CE39;
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-orcid:hover {
+  background-color: #8FB82E;
+  box-shadow: 0 4px 12px rgba(166, 206, 57, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-orcid:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.orcid-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+/* ===================================
+   Divider
+   =================================== */
+.divider {
+  display: flex;
+  align-items: center;
+  margin: var(--spacing-xl) 0;
+  text-align: center;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+.divider-text {
+  padding: 0 var(--spacing-md);
+  color: var(--color-gray-500);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  text-transform: lowercase;
+}
+
+
+/* ===================================
    Footer
    =================================== */
 .login-footer {
