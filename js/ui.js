@@ -74,6 +74,43 @@ export function showError(message) {
 }
 
 /**
+ * Show error message with action link
+ * @param {string} message - Error message to display
+ * @param {string} linkText - Text for the action link
+ * @param {string} linkUrl - URL for the action link
+ */
+export function showErrorWithAction(message, linkText, linkUrl) {
+    if (errorContainer) {
+        // Clear previous content
+        errorContainer.innerHTML = '';
+
+        // Create message text
+        const messageSpan = document.createElement('span');
+        messageSpan.textContent = message + ' ';
+
+        // Create action link
+        const actionLink = document.createElement('a');
+        actionLink.href = linkUrl;
+        actionLink.textContent = linkText;
+        actionLink.style.color = 'inherit';
+        actionLink.style.textDecoration = 'underline';
+        actionLink.style.fontWeight = '600';
+
+        // Append to container
+        errorContainer.appendChild(messageSpan);
+        errorContainer.appendChild(actionLink);
+
+        errorContainer.classList.remove('hidden');
+        errorContainer.classList.add('show');
+
+        // Auto-hide after 8 seconds (longer for actionable errors)
+        setTimeout(() => {
+            hideError();
+        }, 8000);
+    }
+}
+
+/**
  * Hide error message
  */
 export function hideError() {

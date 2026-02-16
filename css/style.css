@@ -482,30 +482,31 @@ body.loaded {
 }
 
 /* ===================================
-   Sign Up Link
+   Info Text
    =================================== */
-.signup-link {
+.info-text {
   text-align: center;
   margin-top: var(--spacing-xl);
   padding-top: var(--spacing-lg);
   border-top: 1px solid var(--color-gray-200);
 }
 
-.signup-link p {
-  font-size: var(--font-size-sm);
+.info-text p {
+  font-size: var(--font-size-xs);
   color: var(--color-gray-600);
+  line-height: 1.5;
 }
 
-.signup-link a {
+.info-text a {
   color: var(--color-primary);
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 500;
   transition: color var(--transition-fast);
 }
 
-.signup-link a:hover {
+.info-text a:hover {
   color: var(--color-primary-dark);
-  text-decoration: underline;
+  text-decoration: underline);
 }
 
 /* ===================================

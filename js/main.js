@@ -10,6 +10,7 @@ import {
     showLoading,
     hideLoading,
     showError,
+    showErrorWithAction,
     showSuccess,
     validateForm,
     setupInputValidation,
@@ -124,7 +125,19 @@ async function handleLoginSubmit(e) {
     } catch (error) {
         // Show error message
         hideLoading();
-        showError(error.message || 'Login failed. Please check your credentials.');
+
+        // Check error code to show appropriate message
+        if (error.code === 'USER_NOT_FOUND') {
+            showErrorWithAction(
+                'Email belum terdaftar.',
+                'Daftar sekarang',
+                '/register'
+            );
+        } else if (error.code === 'INVALID_PASSWORD') {
+            showError('Email atau password salah. Silakan coba lagi.');
+        } else {
+            showError(error.message || 'Login gagal. Silakan coba lagi.');
+        }
     }
 }
 

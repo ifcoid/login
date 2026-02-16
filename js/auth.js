@@ -19,7 +19,10 @@ export async function loginWithEmail(email, password) {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.message || 'Login failed');
+            // Create enhanced error with code
+            const error = new Error(data.error || data.message || 'Login failed');
+            error.code = data.error_code;
+            throw error;
         }
 
         if (data.success && data.data) {
